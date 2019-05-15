@@ -1,8 +1,8 @@
 import boardData from '../../helpers/data/boardsData';
 import util from '../../helpers/util';
 import pins from '../pins/pins';
+import pinsData from '../../helpers/data/pinsData';
 
-let boardsArray = [];
 
 const seePinDiv = (e) => {
   const boardId = e.target.closest('.card').id;
@@ -23,10 +23,10 @@ const boardsDomStringBuilder = (boardsCard) => {
   let domString = '';
   boardsCard.forEach((card) => {
     domString += '<div class = "col-3">';
-    domString += `<div id='${card.id}' class="card">`;
+    domString += `<div id='${card.id}' class="card p-2">`;
     domString += '<div class = "card-body">';
     domString += `<h5 class = "card-title">${card.name}</h5>`;
-    domString += '<button class = "btn btn-outline-danger see-pins">pins</button>';
+    domString += `<button class = "btn btn-outline-danger see-pins">${card.pins.length}</button>`;
     domString += '</div>';
     domString += '</div>';
     domString += '</div>';
@@ -36,12 +36,11 @@ const boardsDomStringBuilder = (boardsCard) => {
 };
 const initBoards = () => {
   boardData.loadBoards()
-    .then((response) => {
-      const boardsResult = response.data.boards;
-      boardsArray = boardsResult;
-      boardsDomStringBuilder(boardsArray);
+    .then(response => pinsData.getPinsForEachBoard(response.data.boards))
+    .then((boardsWithPins) => {
+      boardsDomStringBuilder(boardsWithPins);
     })
     .catch(err => console.error('error from loadBoards', err));
 };
 
-export default { initBoards, boardsDomStringBuilder };
+export default { initBoards };
