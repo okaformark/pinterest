@@ -1,5 +1,6 @@
 import boardData from '../../helpers/data/boardsData';
 import util from '../../helpers/util';
+import pins from '../pins/pins';
 
 let boardsArray = [];
 
@@ -8,6 +9,7 @@ const seePinDiv = (e) => {
   console.error('wrtesdfdg', boardId);
   document.getElementById('boards-page').classList.add('hide');
   document.getElementById('pins-page').classList.remove('hide');
+  pins.initPins(boardId);
 };
 
 const bindEvents = () => {
