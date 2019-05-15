@@ -20,7 +20,6 @@ const initPins = (boardId) => {
   bindEvents();
   pinsData.loadPinsFromBoard(boardId)
     .then((pins) => {
-      console.error('all pins:', pins);
       writePins(pins);
     })
     .catch(err => console.error(err));
